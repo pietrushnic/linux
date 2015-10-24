@@ -67,7 +67,11 @@ static int microread_mei_remove(struct mei_cl_device *device)
 }
 
 static struct mei_cl_device_id microread_mei_tbl[] = {
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,2,0)
 	{ MICROREAD_DRIVER_NAME, MEI_NFC_UUID},
+#else
+	{ MICROREAD_DRIVER_NAME},
+#endif
 
 	/* required last entry */
 	{ }
