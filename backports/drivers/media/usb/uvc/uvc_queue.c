@@ -270,6 +270,7 @@ int uvc_queue_buffer(struct uvc_video_queue *queue, struct v4l2_buffer *buf)
 	return ret;
 }
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 int uvc_export_buffer(struct uvc_video_queue *queue,
 		      struct v4l2_exportbuffer *exp)
 {
@@ -281,6 +282,7 @@ int uvc_export_buffer(struct uvc_video_queue *queue,
 
 	return ret;
 }
+#endif
 
 int uvc_dequeue_buffer(struct uvc_video_queue *queue, struct v4l2_buffer *buf,
 		       int nonblocking)
