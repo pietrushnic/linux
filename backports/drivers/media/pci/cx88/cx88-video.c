@@ -1011,7 +1011,7 @@ static int vidioc_s_frequency (struct file *file, void *priv,
 	return cx88_set_freq(core, f);
 }
 
-#ifdef CONFIG_VIDEO_ADV_DEBUG
+#ifdef CONFIG_BACKPORT_VIDEO_ADV_DEBUG
 static int vidioc_g_register (struct file *file, void *fh,
 				struct v4l2_dbg_register *reg)
 {
@@ -1184,7 +1184,7 @@ static const struct v4l2_ioctl_ops video_ioctl_ops = {
 	.vidioc_s_frequency   = vidioc_s_frequency,
 	.vidioc_subscribe_event      = v4l2_ctrl_subscribe_event,
 	.vidioc_unsubscribe_event    = v4l2_event_unsubscribe,
-#ifdef CONFIG_VIDEO_ADV_DEBUG
+#ifdef CONFIG_BACKPORT_VIDEO_ADV_DEBUG
 	.vidioc_g_register    = vidioc_g_register,
 	.vidioc_s_register    = vidioc_s_register,
 #endif
@@ -1217,7 +1217,7 @@ static const struct v4l2_ioctl_ops vbi_ioctl_ops = {
 	.vidioc_s_tuner       = vidioc_s_tuner,
 	.vidioc_g_frequency   = vidioc_g_frequency,
 	.vidioc_s_frequency   = vidioc_s_frequency,
-#ifdef CONFIG_VIDEO_ADV_DEBUG
+#ifdef CONFIG_BACKPORT_VIDEO_ADV_DEBUG
 	.vidioc_g_register    = vidioc_g_register,
 	.vidioc_s_register    = vidioc_s_register,
 #endif
@@ -1247,7 +1247,7 @@ static const struct v4l2_ioctl_ops radio_ioctl_ops = {
 	.vidioc_s_frequency   = vidioc_s_frequency,
 	.vidioc_subscribe_event      = v4l2_ctrl_subscribe_event,
 	.vidioc_unsubscribe_event    = v4l2_event_unsubscribe,
-#ifdef CONFIG_VIDEO_ADV_DEBUG
+#ifdef CONFIG_BACKPORT_VIDEO_ADV_DEBUG
 	.vidioc_g_register    = vidioc_g_register,
 	.vidioc_s_register    = vidioc_s_register,
 #endif
