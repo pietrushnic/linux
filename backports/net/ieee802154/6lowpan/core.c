@@ -108,7 +108,11 @@ static void lowpan_setup(struct net_device *ldev)
 	ldev->hard_header_len	= 2 + 1 + 20 + 14;
 	ldev->needed_tailroom	= 2; /* FCS */
 	ldev->mtu		= IPV6_MIN_MTU;
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(4,3,0)
 	ldev->priv_flags	|= IFF_NO_QUEUE;
+#else
+	ldev->tx_queue_len = 0;
+#endif
 	ldev->flags		= IFF_BROADCAST | IFF_MULTICAST;
 
 	ldev->netdev_ops	= &lowpan_netdev_ops;
