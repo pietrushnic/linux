@@ -29,7 +29,9 @@
 #include <linux/acpi.h>
 #include <linux/platform_device.h>
 #include <linux/clk.h>
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,13,0)
 #include <linux/gpio/consumer.h>
+#endif
 #include <linux/tty.h>
 
 #include <net/bluetooth/bluetooth.h>
@@ -138,8 +140,10 @@ static int bcm_gpio_set_power(struct bcm_device *dev, bool powered)
 	if (powered && !IS_ERR(dev->clk) && !dev->clk_enabled)
 		clk_enable(dev->clk);
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,13,0)
 	gpiod_set_value(dev->shutdown, powered);
 	gpiod_set_value(dev->device_wakeup, powered);
+#endif
 
 	if (!powered && !IS_ERR(dev->clk) && dev->clk_enabled)
 		clk_disable(dev->clk);
@@ -352,7 +356,9 @@ static int bcm_suspend(struct device *dev)
 
 	/* Suspend the device */
 	if (bdev->device_wakeup) {
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,13,0)
 		gpiod_set_value(bdev->device_wakeup, false);
+#endif
 		bt_dev_dbg(bdev, "suspend, delaying 15 ms");
 		mdelay(15);
 	}
@@ -376,7 +382,9 @@ static int bcm_resume(struct device *dev)
 		goto unlock;
 
 	if (bdev->device_wakeup) {
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,13,0)
 		gpiod_set_value(bdev->device_wakeup, true);
+#endif
 		bt_dev_dbg(bdev, "resume, delaying 15 ms");
 		mdelay(15);
 	}
@@ -395,6 +403,7 @@ unlock:
 }
 #endif
 
+#if defined(CONFIG_ACPI) && LINUX_VERSION_CODE >= KERNEL_VERSION(3,19,0)
 static const struct acpi_gpio_params device_wakeup_gpios = { 0, 0, false };
 static const struct acpi_gpio_params shutdown_gpios = { 1, 0, false };
 
@@ -404,7 +413,6 @@ static const struct acpi_gpio_mapping acpi_bcm_default_gpios[] = {
 	{ },
 };
 
-#ifdef CONFIG_ACPI
 static int bcm_resource(struct acpi_resource *ares, void *data)
 {
 	struct bcm_device *dev = data;
@@ -543,7 +551,7 @@ static const struct hci_uart_proto bcm_proto = {
 	.dequeue	= bcm_dequeue,
 };
 
-#ifdef CONFIG_ACPI
+#if defined(CONFIG_ACPI) && LINUX_VERSION_CODE >= KERNEL_VERSION(3,19,0)
 static const struct acpi_device_id bcm_acpi_match[] = {
 	{ "BCM2E39", 0 },
 	{ "BCM2E67", 0 },
@@ -560,7 +568,9 @@ static struct platform_driver bcm_driver = {
 	.remove = bcm_remove,
 	.driver = {
 		.name = "hci_bcm",
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,19,0)
 		.acpi_match_table = ACPI_PTR(bcm_acpi_match),
+#endif
 		.pm = &bcm_pm_ops,
 	},
 };
