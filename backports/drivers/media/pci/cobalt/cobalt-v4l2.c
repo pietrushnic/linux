@@ -1118,7 +1118,9 @@ static const struct v4l2_ioctl_ops cobalt_ioctl_ops = {
 	.vidioc_querybuf		= vb2_ioctl_querybuf,
 	.vidioc_qbuf			= vb2_ioctl_qbuf,
 	.vidioc_dqbuf			= vb2_ioctl_dqbuf,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 	.vidioc_expbuf			= vb2_ioctl_expbuf,
+#endif
 #ifdef CONFIG_VIDEO_ADV_DEBUG
 	.vidioc_g_register              = cobalt_g_register,
 	.vidioc_s_register              = cobalt_s_register,

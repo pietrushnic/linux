@@ -718,6 +718,7 @@ static int mxr_dqbuf(struct file *file, void *priv, struct v4l2_buffer *p)
 	return vb2_dqbuf(&layer->vb_queue, p, file->f_flags & O_NONBLOCK);
 }
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 static int mxr_expbuf(struct file *file, void *priv,
 	struct v4l2_exportbuffer *eb)
 {
@@ -726,6 +727,7 @@ static int mxr_expbuf(struct file *file, void *priv,
 	mxr_dbg(layer->mdev, "%s:%d\n", __func__, __LINE__);
 	return vb2_expbuf(&layer->vb_queue, eb);
 }
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
 
 static int mxr_streamon(struct file *file, void *priv, enum v4l2_buf_type i)
 {
@@ -754,7 +756,9 @@ static const struct v4l2_ioctl_ops mxr_ioctl_ops = {
 	.vidioc_querybuf = mxr_querybuf,
 	.vidioc_qbuf = mxr_qbuf,
 	.vidioc_dqbuf = mxr_dqbuf,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 	.vidioc_expbuf = mxr_expbuf,
+#endif
 	/* Streaming control */
 	.vidioc_streamon = mxr_streamon,
 	.vidioc_streamoff = mxr_streamoff,

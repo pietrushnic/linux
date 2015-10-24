@@ -470,6 +470,7 @@ static int soc_camera_prepare_buf(struct file *file, void *priv,
 		return vb2_prepare_buf(&icd->vb2_vidq, b);
 }
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 static int soc_camera_expbuf(struct file *file, void *priv,
 			     struct v4l2_exportbuffer *p)
 {
@@ -484,6 +485,7 @@ static int soc_camera_expbuf(struct file *file, void *priv,
 		return -EBUSY;
 	return vb2_expbuf(&icd->vb2_vidq, p);
 }
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
 
 /* Always entered with .host_lock held */
 static int soc_camera_init_user_formats(struct soc_camera_device *icd)
@@ -2120,7 +2122,9 @@ static const struct v4l2_ioctl_ops soc_camera_ioctl_ops = {
 	.vidioc_dqbuf		 = soc_camera_dqbuf,
 	.vidioc_create_bufs	 = soc_camera_create_bufs,
 	.vidioc_prepare_buf	 = soc_camera_prepare_buf,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 	.vidioc_expbuf		 = soc_camera_expbuf,
+#endif
 	.vidioc_streamon	 = soc_camera_streamon,
 	.vidioc_streamoff	 = soc_camera_streamoff,
 	.vidioc_cropcap		 = soc_camera_cropcap,

@@ -378,12 +378,14 @@ static int gsc_m2m_reqbufs(struct file *file, void *fh,
 	return v4l2_m2m_reqbufs(file, ctx->m2m_ctx, reqbufs);
 }
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 static int gsc_m2m_expbuf(struct file *file, void *fh,
 				struct v4l2_exportbuffer *eb)
 {
 	struct gsc_ctx *ctx = fh_to_ctx(fh);
 	return v4l2_m2m_expbuf(file, ctx->m2m_ctx, eb);
 }
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
 
 static int gsc_m2m_querybuf(struct file *file, void *fh,
 					struct v4l2_buffer *buf)
@@ -566,7 +568,9 @@ static const struct v4l2_ioctl_ops gsc_m2m_ioctl_ops = {
 	.vidioc_s_fmt_vid_cap_mplane	= gsc_m2m_s_fmt_mplane,
 	.vidioc_s_fmt_vid_out_mplane	= gsc_m2m_s_fmt_mplane,
 	.vidioc_reqbufs			= gsc_m2m_reqbufs,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 	.vidioc_expbuf                  = gsc_m2m_expbuf,
+#endif
 	.vidioc_querybuf		= gsc_m2m_querybuf,
 	.vidioc_qbuf			= gsc_m2m_qbuf,
 	.vidioc_dqbuf			= gsc_m2m_dqbuf,

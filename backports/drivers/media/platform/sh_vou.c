@@ -1187,7 +1187,9 @@ static const struct v4l2_ioctl_ops sh_vou_ioctl_ops = {
 	.vidioc_prepare_buf		= vb2_ioctl_prepare_buf,
 	.vidioc_streamon		= vb2_ioctl_streamon,
 	.vidioc_streamoff		= vb2_ioctl_streamoff,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 	.vidioc_expbuf			= vb2_ioctl_expbuf,
+#endif
 	.vidioc_g_output		= sh_vou_g_output,
 	.vidioc_s_output		= sh_vou_s_output,
 	.vidioc_enum_output		= sh_vou_enum_output,

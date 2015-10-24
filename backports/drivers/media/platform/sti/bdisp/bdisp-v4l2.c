@@ -1035,7 +1035,9 @@ static const struct v4l2_ioctl_ops bdisp_ioctl_ops = {
 	.vidioc_s_selection		= bdisp_s_selection,
 	.vidioc_reqbufs                 = v4l2_m2m_ioctl_reqbufs,
 	.vidioc_create_bufs             = v4l2_m2m_ioctl_create_bufs,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 	.vidioc_expbuf                  = v4l2_m2m_ioctl_expbuf,
+#endif
 	.vidioc_querybuf                = v4l2_m2m_ioctl_querybuf,
 	.vidioc_qbuf                    = v4l2_m2m_ioctl_qbuf,
 	.vidioc_dqbuf                   = v4l2_m2m_ioctl_dqbuf,

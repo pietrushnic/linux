@@ -658,6 +658,7 @@ static int vidioc_dqbuf(struct file *file, void *priv, struct v4l2_buffer *buf)
 	return ret;
 }
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 /* Export DMA buffer */
 static int vidioc_expbuf(struct file *file, void *priv,
 	struct v4l2_exportbuffer *eb)
@@ -670,6 +671,7 @@ static int vidioc_expbuf(struct file *file, void *priv,
 		return vb2_expbuf(&ctx->vq_dst, eb);
 	return -EINVAL;
 }
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
 
 /* Stream on */
 static int vidioc_streamon(struct file *file, void *priv,
@@ -873,7 +875,9 @@ static const struct v4l2_ioctl_ops s5p_mfc_dec_ioctl_ops = {
 	.vidioc_querybuf = vidioc_querybuf,
 	.vidioc_qbuf = vidioc_qbuf,
 	.vidioc_dqbuf = vidioc_dqbuf,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 	.vidioc_expbuf = vidioc_expbuf,
+#endif
 	.vidioc_streamon = vidioc_streamon,
 	.vidioc_streamoff = vidioc_streamoff,
 	.vidioc_g_crop = vidioc_g_crop,
