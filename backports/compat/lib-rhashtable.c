@@ -838,8 +838,8 @@ void rhashtable_free_and_destroy(struct rhashtable *ht,
 }
 EXPORT_SYMBOL_GPL(rhashtable_free_and_destroy);
 
-void rhashtable_destroy(struct rhashtable *ht)
+void backport_rhashtable_destroy(struct rhashtable *ht)
 {
 	return rhashtable_free_and_destroy(ht, NULL, NULL);
 }
-EXPORT_SYMBOL_GPL(rhashtable_destroy);
+EXPORT_SYMBOL_GPL(backport_rhashtable_destroy);
