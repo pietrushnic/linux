@@ -506,12 +506,12 @@ static void ctp_wakeup(void)
 	return;
 }
 /**
- * ctp_detect - Device detection callback for automatic device creation
+ * ft_ctp_detect - Device detection callback for automatic device creation
  * return value:
  *                    = 0; success;
  *                    < 0; err
  */
-int ctp_detect(struct i2c_client *client, struct i2c_board_info *info)
+int ft_ctp_detect(struct i2c_client *client, struct i2c_board_info *info)
 {
 	struct i2c_adapter *adapter = client->adapter;
 
