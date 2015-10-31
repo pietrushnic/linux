@@ -190,3 +190,6 @@ config KERNEL_4_1
     def_bool y
 config BACKPORT_KERNEL_4_2
     def_bool y
+config WIRELESS_EXT
+    def_bool y
+    
