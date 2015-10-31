@@ -140,16 +140,18 @@ static const struct file_operations wireless_seq_fops = {
 	.release = seq_release_net,
 };
 
-int __net_init wext_proc_init(struct net *net)
-{
-	/* Create /proc/net/wireless entry */
-	if (!proc_net_fops_create(net, "wireless", S_IRUGO, &wireless_seq_fops))
-		return -ENOMEM;
-
-	return 0;
-}
-
-void __net_exit wext_proc_exit(struct net *net)
-{
-	proc_net_remove(net, "wireless");
-}
+// use backport functions
+//int __net_init wext_proc_init(struct net *net)
+//{
+//	/* Create /proc/net/wireless entry */
+//	if (!proc_net_fops_create(net, "wireless", S_IRUGO, &wireless_seq_fops))
+//		return -ENOMEM;
+//
+//	return 0;
+//}
+//
+//void __net_exit wext_proc_exit(struct net *net)
+//{
+//	proc_net_remove(net, "wireless");
+//}
+//
